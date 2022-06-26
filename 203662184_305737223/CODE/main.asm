@@ -25,31 +25,34 @@
 		lw $s1, RowLen
 		lw $s2, ColLen
 
-		li $t1, 0 #i
-		li $t2, 0 #j
+		lui $t1, 0 #i
+		lui $t2, 0 #j
 		jal transposeFunc
-    	# terminate program
-    	li      $v0, 10
-    	syscall		
+		end: nop
+			beq $zero, $zero, end	
    					
 ###########################################
 	transposeFunc:
-		bge $t1, $s1, exitTranspose
+	
+		slt $at,$t1,$s1
+		beq $at,$zero exitTranspose
+		
 		innerLoopTrans:
-			bge $t2, $s2, exitInnerTrans
+		
+			slt $at,$t2,$s2
+			beq $at,$zero exitInnerTrans
 				
 			mul $t3, $t1, $s2
 			add $t3, $t3, $t2
 			mul $t3, $t3, dataSize
 			add $t3, $t3, $a1		# t3 has address of Matrix1 [i] [j]
+			
 			lw $t5, ($t3)
-				
-				
+			
 			mul $t4, $t2, $s1
 			add $t4, $t4, $t1
 			mul $t4, $t4, dataSize
 			add $t4, $t4, $a2		# t4 has address of Matrix2 [j] [i]
-				
 				
 			sw $t5, ($t4)			# Matrix2 [j] [i] = Matrix1 [i] [j]
 				
@@ -58,12 +61,12 @@
 			j innerLoopTrans
 				
 		exitInnerTrans:
-			li $t2, 0
+			lui $t2, 0
 			addi $t1, $t1, 1
 			j transposeFunc
 					
 		exitTranspose:
-			li $t1,0
-			li $t2,0
+			lui $t1,0
+			lui $t2,0
 					
 			jr $ra
