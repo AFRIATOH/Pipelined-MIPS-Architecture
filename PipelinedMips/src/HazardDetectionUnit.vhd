@@ -33,7 +33,7 @@ component comp5
 end component;
 
 component zerocomp5
-	port ( a		: in std_logic_vector(4 downto 0);
+	port ( a   : in std_logic_vector(4 downto 0);
 			 zero	: out std_logic);
 end component;
 
