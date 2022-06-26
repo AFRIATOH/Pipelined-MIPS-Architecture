@@ -1,14 +1,14 @@
 .data
 	matrix1: 	.word 1, 2, 3, 4
-	 			.word 5, 6, 7, 8
-				.word 9, 10, 11, 12
-	 			.word 13, 14, 15, 16
+	 		.word 5, 6, 7, 8
+			.word 9, 10, 11, 12
+	 		.word 13, 14, 15, 16
 	 
 	 
 	matrix2: 	.word 0, 0, 0, 0
-				.word 0, 0, 0, 0
-				.word 0, 0, 0, 0
-				.word 0, 0, 0, 0	 
+			.word 0, 0, 0, 0
+			.word 0, 0, 0, 0
+			.word 0, 0, 0, 0	 
 	 
 	RowLen:		.word 4
 	ColLen: 	.word 4
@@ -19,8 +19,9 @@
 
 .globl main
 	main:
-		la $a1, matrix1
-		la $a2, matrix2	
+		lui $at, 0x1001
+		ori $a1, $at, 0
+		ori $a2, $at, 64
 
 		lw $s1, RowLen
 		lw $s2, ColLen
@@ -28,8 +29,11 @@
 		lui $t1, 0 #i
 		lui $t2, 0 #j
 		jal transposeFunc
-		end: nop
-			beq $zero, $zero, end	
+		ori $v0, $zero, 10
+		syscall
+		
+		#end: nop
+			#beq $zero, $zero, end	
    					
 ###########################################
 	transposeFunc:
