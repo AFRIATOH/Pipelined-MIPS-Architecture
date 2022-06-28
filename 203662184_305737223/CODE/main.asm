@@ -29,11 +29,7 @@
 		lui $t1, 0 #i
 		lui $t2, 0 #j
 		jal transposeFunc
-		ori $v0, $zero, 10
-		syscall
-		
-		#end: nop
-			#beq $zero, $zero, end	
+		eop:    beq $1, $1, eop     #infinite loop
    					
 ###########################################
 	transposeFunc:
